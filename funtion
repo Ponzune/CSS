@@ -1,0 +1,112 @@
+<?php
+// Add custom Theme Functions here
+update_option( 'flatsome_wup_purchase_code', '846b8d75-85b3-4b3e-976c-2e29d386339d' );
+update_option( 'flatsome_wup_supported_until', '01.01.2050' );
+update_option( 'flatsome_wup_buyer', 'Licensed' );
+update_option( 'flatsome_wup_sold_at', time() );
+delete_option( 'flatsome_wup_errors');
+delete_option( 'flatsome_wupdates');
+add_action('admin_head', 'custom_css_backend');
+function custom_css_backend() {
+echo '<style>#flatsome-notice {display: none;}</style>';}
+// Add custom Theme Functions here
+
+function layDuLieu($table_name) {
+
+global $wpdb;
+
+// Select all data from the table
+
+$results = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+
+// Check if there are any results
+
+if ($results)
+
+{
+
+// Loop through each row of results
+
+foreach ($results as $row) {
+
+// Access individual columns using associative array keys
+
+echo "Name 1: " . $row['name'] . "<br>";
+
+echo "Email 2: " . $row['email'] . "<br>";
+
+echo "Content: " . $row['message'] . "<br>";
+
+// Add more columns as needed
+
+echo "<br>";
+
+}
+
+} else {
+
+echo "No data found in the table.";
+
+}
+
+}
+
+function themDuLieu($table_name, $params) {
+
+global $wpdb;
+
+$query = "INSERT INTO {$table_name}(name, email, message) VALUES('{$params['name']}','{$params['email']}','{$params['message']}')";
+
+echo 'Insert query: ' . $query;
+
+if($wpdb->query($query)){
+
+return true;
+
+} else {
+
+return false;
+
+}
+
+}
+
+if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['my_form'])) {
+
+// Add code to save the form data to the database
+
+global $wpdb;
+
+/*create table if not exists*/
+
+$table_name = dangky;
+
+$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+
+$name = sanitize_text_field($_POST["name"]);
+
+$email = sanitize_email($_POST["email"]);
+
+$message = sanitize_textarea_field($_POST["message"]);
+
+// 3. Them du lieu khi bang da ton tai
+
+$params = $_POST;
+
+$queryResult = themDuLieu($table_name, $params);
+
+// 4. Lay du lieu neu them thanh cong
+
+if($queryResult) {
+
+layDuLieu($table_name);
+
+} else {
+
+echo "bi loi lay du lieu";
+
+}
+
+exit;
+
+}
