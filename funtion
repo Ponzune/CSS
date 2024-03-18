@@ -57,7 +57,6 @@ global $wpdb;
 
 $query = "INSERT INTO {$table_name}(name, email, message) VALUES('{$params['name']}','{$params['email']}','{$params['message']}')";
 
-echo 'Insert query: ' . $query;
 
 if($wpdb->query($query)){
 
@@ -98,13 +97,10 @@ $queryResult = themDuLieu($table_name, $params);
 // 4. Lay du lieu neu them thanh cong
 
 if($queryResult) {
-
-layDuLieu($table_name);
-
+	header ("Location: https://ktam.cnttq12.com/da-nhap-du-lieu-thanh-cong/");
 } else {
-
-echo "bi loi lay du lieu";
-
+header ("Location: https://ktam.cnttq12.com/nhap-du-lieu-that-bai/");
+	
 }
 
 exit;
