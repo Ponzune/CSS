@@ -12,8 +12,9 @@ function kiemTraEmail($table_name, $email) {
 		// Loop through each row of results
 		foreach ($results as $row) {
 			// Access individual columns using associative array keys
-			echo "Name 1: " . $row['name'] . "<br>";
-			echo "Email 2: " . $row['email'] . "<br>";
+			echo "Phone 1: " . $row['phone'] . "<br>";
+			echo "Name 2: " . $row['name'] . "<br>";
+			echo "Email 3: " . $row['email'] . "<br>";
 			echo "Content: " . $row['message'] . "<br>";
 			// Add more columns as needed
 			echo "<br>";
@@ -56,7 +57,7 @@ function layDuLieu($table_name) {
 function themDuLieu($table_name, $params) {
 	global $wpdb;
 	
-	$query = "INSERT INTO {$table_name}(name, email, message) VALUES('{$params['name']}','{$params['email']}','{$params['message']}')"; 
+	$query = "INSERT INTO {$table_name}(phone, name, email, message) VALUES('{$params['phone']}','{$params['name']}','{$params['email']}','{$params['message']}')"; 
 	echo 'Insert query: ' . $query;
 	
 	if($wpdb->query($query)){
@@ -74,9 +75,10 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['my_form'])) {
     $table_name = 'lienhe';
 
     $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
-	$name = sanitize_text_field($_POST["name"]);
-	$email = sanitize_email($_POST["email"]);
-	$message = sanitize_textarea_field($_POST["message"]);
+	$phone = $_POST["phone"];
+	$name = $_POST["name"];
+	$email =$_POST["email"];
+	$message =$_POST["message"];
     $params = $_POST;
 		
 	$queryResult = themDuLieu($table_name, $params);
@@ -122,6 +124,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['layDanhSachLienHe']
 		// Loop through each row of results
 		foreach ($arr_lienhe as $row) {
 			// Access individual columns using associative array keys
+			echo "phone: " . $row['phone'] . "<br>";
 			echo "Name: " . $row['name'] . "<br>";
 			echo "Email: " . $row['email'] . "<br>";
 			echo "Content: " . $row['message'] . "<br>";
