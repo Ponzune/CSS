@@ -29,56 +29,56 @@ do_action( 'flatsome_before_page' ); ?>
                     <div class="table-wrapper">
                         <div class="table-title">
                             <div class="row">
-                                <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                                <div class="col-sm-8"><h2>Kiểm Tra <b>Liên Hệ</b></h2></div>
                                 <div class="col-sm-4">
-                                    <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Thêm dòng</button>
+ 
                                 </div>
                             </div>
                         </div>
                       	<form method="get">
-                          <label for="email">Email:</label>
-                          <input type="text" name="email" required="">
+                          <label for="phone">Phone:</label>
+                          <input type="number" name="phone" required="">
 
 
-                          <input type="submit" value="Submit">
+                          <input type="submit" value="Nhập">
                       </form>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                   	<th>Stt</th>
-                                  	<th>id</th>
-                                    <th>Name</th>
+                                  	<th>Phone</th>
+                                    <th>Tên</th>
                                     <th>Email</th>
-                                    <th>Message</th>
-                                    <th>Actions</th>
+                                    <th>Ghi Chú</th>
+            
                                 </tr>
                             </thead>
                             <tbody>
                               	<form>
                               	<?php
-  									if(isset($_GET['email'])) {
+  									if(isset($_GET['phone'])) {
                                       global $wpdb;
-                                      $email = $_GET['email'];
+                                      $phone = $_GET['phone'];
                                       // Select all data from the table
-                                      $results = $wpdb->get_results("SELECT * FROM lienhe WHERE email like '%$email%'", ARRAY_A);
+                                      $results = $wpdb->get_results("SELECT * FROM lienhe WHERE phone like '%$phone%'", ARRAY_A);
 
                                       // Check if there are any results
                                       if ($results)
                                       {
-                                          $index = 1;
+     
                                           // Loop through each row of results
                                           foreach ($results as $row) {
                                       ?>
                                       <tr>
                                           <td><?php echo $index ?></td>
-                                          <td><?php echo $row['id']; ?></td>
+                                          <td><?php echo $row['phone']; ?></td>
                                           <td><?php echo $row['name']; ?></td>
                                           <td><?php echo $row['email']; ?></td>
                                           <td><?php echo $row['message']; ?></td>
                                       </tr>
 
                                       <?php
-                                              $index++;
+      
                                           }
                                       } else {
                                           echo "No data found in the table.";
