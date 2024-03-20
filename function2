@@ -1,5 +1,4 @@
 <?php
-
 function kiemTraEmail($table_name, $email) {
 	global $wpdb;
 	
@@ -83,9 +82,9 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['my_form'])) {
 	$queryResult = themDuLieu($table_name, $params);
 	if($queryResult) {
 		layDuLieu($table_name);
-		header("location:https://dong.cnttq12.com/");
+		header ("Location: https://ktam.cnttq12.com/da-nhap-du-lieu-thanh-cong/");
 	} else {
-		echo "bi loi lay du lieu";
+	header ("Location: https://ktam.cnttq12.com/nhap-du-lieu-that-bai/");
 	}
 	
 	exit;
@@ -111,7 +110,6 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['form_kt'])) {
 		echo "Content: " . $results[0]['message'] . "<br>";
 	}
 	*/
-// 	header("location:https://dong.cnttq12.com/quan-ly-lien-he/");
 	exit;
 }
 
