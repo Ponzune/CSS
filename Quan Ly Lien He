@@ -39,11 +39,11 @@ do_action( 'flatsome_before_page' ); ?>
                             <thead>
                                 <tr>
                                   	<th>Stt</th>
-                                  	<th>id</th>
-                                    <th>Name</th>
+                                  	<th>Phone</th>
+                                    <th>Tên</th>
                                     <th>Email</th>
-                                    <th>Message</th>
-                                    <th>Actions</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Hành Động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,7 +62,7 @@ do_action( 'flatsome_before_page' ); ?>
                                 ?>
                               	<tr>
                                   	<td><?php echo $index ?></td>
-                                  <td><input value="<?php echo $row['id']; ?>" disabled> </td>
+                                    <td><?php echo $row['phone']; ?></td>
                                     <td><?php echo $row['name']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['message']; ?></td>
@@ -73,7 +73,7 @@ do_action( 'flatsome_before_page' ); ?>
                                 </tr>
                                 
                               	<?php
-                                      	$index++;
+                       
                                     }
                                 } else {
                                     echo "No data found in the table.";
