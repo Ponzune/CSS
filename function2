@@ -1,0 +1,137 @@
+<?php
+
+function kiemTraEmail($table_name, $email) {
+	global $wpdb;
+	
+	// Select all data from the table
+	$results = $wpdb->get_results("SELECT * FROM $table_name WHERE email like '%$email'", ARRAY_A);
+
+	// Check if there are any results
+	
+	if ($results)
+	{
+		// Loop through each row of results
+		foreach ($results as $row) {
+			// Access individual columns using associative array keys
+			echo "Name 1: " . $row['name'] . "<br>";
+			echo "Email 2: " . $row['email'] . "<br>";
+			echo "Content: " . $row['message'] . "<br>";
+			// Add more columns as needed
+			echo "<br>";
+		}
+	} else {
+		echo "No data found in the table.";
+	}
+	
+	
+	return $results;
+}
+
+function layDuLieu($table_name) {
+	global $wpdb;
+	
+	// Select all data from the table
+	$results = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+
+	// Check if there are any results
+	/*
+	if ($results)
+	{
+		// Loop through each row of results
+		foreach ($results as $row) {
+			// Access individual columns using associative array keys
+			echo "Name 1: " . $row['name'] . "<br>";
+			echo "Email 2: " . $row['email'] . "<br>";
+			echo "Content: " . $row['message'] . "<br>";
+			// Add more columns as needed
+			echo "<br>";
+		}
+	} else {
+		echo "No data found in the table.";
+	}
+	*/
+	
+	return $results;
+}
+
+function themDuLieu($table_name, $params) {
+	global $wpdb;
+	
+	$query = "INSERT INTO {$table_name}(name, email, message) VALUES('{$params['name']}','{$params['email']}','{$params['message']}')"; 
+	echo 'Insert query: ' . $query;
+	
+	if($wpdb->query($query)){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['my_form'])) {
+	// Add code to save the form data to the database
+  	global $wpdb;
+	
+	/*create table if not exists*/
+    $table_name = 'lienhe';
+
+    $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+	$name = sanitize_text_field($_POST["name"]);
+	$email = sanitize_email($_POST["email"]);
+	$message = sanitize_textarea_field($_POST["message"]);
+    $params = $_POST;
+		
+	$queryResult = themDuLieu($table_name, $params);
+	if($queryResult) {
+		layDuLieu($table_name);
+		header("location:https://dong.cnttq12.com/");
+	} else {
+		echo "bi loi lay du lieu";
+	}
+	
+	exit;
+} 
+
+if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['form_kt'])) {
+	global $wpdb;
+	
+	/*kiem tra so dien thoai ton tai*/ 
+	$table_name = 'lienhe';
+	$email = $_POST['email'];
+	kiemTraEmail($table_name, $email);
+	/*
+	//$query = "Select * From {$table_name} where email = '{$params['email']}')";
+	
+	$results = $wpdb->get_results("Select * from {$table_name} where email = '{$_POST['email']}'", ARRAY_A);
+	
+	if(count($results) != 1) {
+		echo "Email khong ton tai!";
+	} else {
+		echo "Name: " . $results[0]['name'] . "<br>";
+		echo "Email: " . $results[0]['email'] . "<br>"; 
+		echo "Content: " . $results[0]['message'] . "<br>";
+	}
+	*/
+// 	header("location:https://dong.cnttq12.com/quan-ly-lien-he/");
+	exit;
+}
+
+if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['layDanhSachLienHe'])) {
+	$table_name = 'lienhe';
+	$arr_lienhe = layDuLieu($table_name);
+	
+	if ($arr_lienhe)
+	{
+		// Loop through each row of results
+		foreach ($arr_lienhe as $row) {
+			// Access individual columns using associative array keys
+			echo "Name: " . $row['name'] . "<br>";
+			echo "Email: " . $row['email'] . "<br>";
+			echo "Content: " . $row['message'] . "<br>";
+			// Add more columns as needed
+			echo "<br>";
+		}
+	}
+	exit;
+	
+}
+	
